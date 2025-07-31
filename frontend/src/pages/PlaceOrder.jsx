@@ -81,6 +81,17 @@ const PlaceOrder = () => {
           }
         break;
 
+        // Dummy Stripe: https://docs.stripe.com/testing#international-cards 
+        case 'stripe':
+          const responseStripe = await axios.post('http://localhost:4000/api/order/stripe', orderData, {headers: {token}})
+          if (responseStripe.data.success) {
+            const { session_url } = responseStripe.data;
+            window.location.replace(session_url)
+          } else {
+            toast.error(responseStripe.data.message)
+          }
+          break; 
+
         default:
 
           break;

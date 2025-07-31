@@ -4,6 +4,8 @@ const adminAuth = (req, res, next) => {
   try {
     const { token } = req.headers;
 
+    console.log(token); 
+
     if (!token) {
       return res.status(400).json({
         success: false,
