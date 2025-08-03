@@ -9,7 +9,7 @@ import PlaceOrder from "./pages/PlaceOrder";
 import Product from "./pages/Product";
 import Contact from "./pages/Contact";
 import Navbar from "./components/Navbar";
-import Verify from "./pages/verify";
+import Verify from "./pages/Verify";
 import Footer from "./components/Footer";
 import SearchBar from "./components/SearchBar";
 import { ToastContainer, toast } from "react-toastify";

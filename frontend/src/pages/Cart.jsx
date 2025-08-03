@@ -8,7 +8,6 @@ import Title from "../components/Title";
 const Cart = () => {
   const { currency, cartItems, products, updateQuantity, navigate } =
     useContext(ShopContext);
-    console.log(cartItems, "cartItems");   
 
   const [cartData, setCartData] = useState([]);
 
@@ -28,7 +27,6 @@ const Cart = () => {
       }
     }
     }
-
     
     setCartData(tempData);    
   }, [cartItems, products]);
@@ -72,14 +70,14 @@ const Cart = () => {
                 </div>
               </div>
               <input
-                onChange={(e) =>
+                onChange={(e) => {
                   e.target.value === "" || e.target.value == "0"
                     ? null
                     : updateQuantity(
                         item._id,
                         item.size,
                         Number(e.target.value)
-                      )
+                      )}
                 }
                 className="border max-w-10 sm:max-w-20 px-1  sm:px-2 py-1"
                 type="number"

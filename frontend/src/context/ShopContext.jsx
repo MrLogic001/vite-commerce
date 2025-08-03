@@ -14,6 +14,8 @@ const ShopContextProvider = (props) => {
   const [products, setProducts] = useState([]);
   const [token, setToken] = useState("");
 
+  //const backendUrl = import.meta.env.VITE_BACKEND_URL
+
   const navigate = useNavigate();
 
   const addToCart = async (itemId, size) => {
@@ -109,7 +111,9 @@ const ShopContextProvider = (props) => {
             totalAmount += itemInfo.price * cartItems[items][item];
           }
         }
-      } catch (error) {}
+      } catch (error) {
+        console.error(error);
+      }
     }
     return totalAmount;
   };
