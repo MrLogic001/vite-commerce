@@ -11,68 +11,122 @@ const Collections = () => {
   const [showFilter, setShowFilter] = useState(false);
   const [filterProducts, setFilterProducts] = useState([]);
   const [category, setCategory] = useState([]);
-  const [subCategory, setSubCategory] = useState([]);
+  const [subCategory, setSubCategory] = useState([])
   const [sortType, setSortType] = useState("relevant");
 
   const toggleCategory = (e) => {
-
     if (category.includes(e.target.value)) {
-      setCategory(prev => prev.filter(item => item !== e.target.value))
+      setCategory((prev) => prev.filter((item) => item !== e.target.value));
     } else {
-      setCategory(prev => [...prev, e.target.value])
+      setCategory((prev) => [...prev, e.target.value]);
     }
-  }
+  };
 
   const toggleSubCategory = (e) => {
-    
     if (subCategory.includes(e.target.value)) {
-      setSubCategory(prev => prev.filter(item => item !== e.target.value))
+        setSubCategory((prev) => {
+            const newSubCategories = prev.filter((item) => item !== e.target.value);
+            console.log("Updated SubCategories:", newSubCategories);
+            return newSubCategories;
+        });
     } else {
-      setSubCategory(prev => [...prev, e.target.value])
+        setSubCategory((prev) => {
+            const newSubCategories = [...prev, e.target.value];
+            console.log("Updated SubCategories:", newSubCategories);
+            return newSubCategories;
+        });
     }
-  }
+};
+
+
+/*   const toggleSubCategory = (e) => {
+    if (subCategory.includes(e.target.value)) {
+      setSubCategory((prev) => prev.filter((item) => item !== e.target.value));
+
+       console.log("SubCategories Selected:", subCategory);
+    console.log("Current Item SubCategory:", item.subCategory);
+    } else {
+      setSubCategory((prev) => [...prev, e.target.value]);
+
+       console.log("SubCategories Selected:", subCategory);
+    console.log("Current Item SubCategory:", item.subCategory);
+    }
+
+   
+  }; */
 
   const applyFilter = () => {
-    let prodsCopy = products.slice()
+    let prodsCopy = products.slice();
+
+    prodsCopy = prodsCopy.filter((item) => {
+      let matchesSearch = true;
+      let matchesCategory = true;
+      let matchesSubCategory = true;
+
+      if (search && showSearch) {
+        matchesSearch = item.name.toLowerCase().includes(search.toLowerCase());
+      }
+
+      if (category.length > 0) {
+        matchesCategory = category.includes(item.category);
+      }
+
+      if (subCategory.length > 0) {
+        matchesSubCategory = subCategory.includes(item.subCategory);
+      }
+
+      return matchesSearch && matchesCategory && matchesSubCategory;
+    });
+
+    setFilterProducts(prodsCopy);
+    console.log("Filtered Products Count:", filterProducts.length);
+
+  };
+
+  /*  const applyFilter = () => {
+    let prodsCopy = products.slice();
 
     if (search && showSearch) {
-      prodsCopy = prodsCopy.filter(item => item.name.toLowerCase().includes(search.toLowerCase()))
+      prodsCopy = prodsCopy.filter((item) =>
+        item.name.toLowerCase().includes(search.toLowerCase())
+      );
     }
 
     if (category.length > 0) {
-      prodsCopy = prodsCopy.filter(item => category.includes(item.category))
+      prodsCopy = prodsCopy.filter((item) => category.includes(item.category));
     }
 
     if (subCategory.length > 0) {
       prodsCopy = prodsCopy.filter(item => subCategory.includes(item.subCategory))
     }
 
-    setFilterProducts(prodsCopy)
-  }
+    setFilterProducts(prodsCopy);
+  }; */
 
   const sortProducts = () => {
-    switch(sortType) {
-      case 'low-high':
-        let filtProducts = filterProducts.slice();
+    let filtProducts = filterProducts.slice();
+
+    switch (sortType) {
+      case "low-high":
         setFilterProducts(filtProducts.sort((a, b) => a.price - b.price));
         break;
 
-      case 'high-low':
-        setFilterProducts(filtProducts.sort((a, b) => b.price - a.price)) 
+      case "high-low":
+        setFilterProducts(filtProducts.sort((a, b) => b.price - a.price));
         break;
-        
+
       default:
-        applyFilter();  
+        applyFilter();
     }
-  }
+  };
 
   useEffect(() => {
     applyFilter();
   }, [category, subCategory, search, showSearch, products]);
 
- useEffect(() => {
-  sortProducts();
- }, [sortType]);
+  useEffect(() => {
+    sortProducts();
+  }, [sortType]);
 
   return (
     <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t">
@@ -138,7 +192,7 @@ const Collections = () => {
               <input
                 type="checkbox"
                 className="w-3"
-                value={"Topwear"}
+                value={"Top-wear"}
                 onChange={toggleSubCategory}
               />{" "}
               Topwear
@@ -147,7 +201,7 @@ const Collections = () => {
               <input
                 type="checkbox"
                 className="w-3"
-                value={"Bottomwear"}
+                value={"Bottom-wear"}
                 onChange={toggleSubCategory}
               />{" "}
               Bottomwear
@@ -156,7 +210,7 @@ const Collections = () => {
               <input
                 type="checkbox"
                 className="w-3"
-                value={"Winterwear"}
+                value={"Winter-wear"}
                 onChange={toggleSubCategory}
               />{" "}
               Winterwear
