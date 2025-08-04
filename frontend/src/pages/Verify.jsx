@@ -12,7 +12,7 @@ is quite longer.
 const Verify = () => {
 
   const [searchParams, setSearchParams] = useSearchParams()
-  const { token, navigate, setCartItems } = useContext(ShopContext)
+  const { token, navigate, setCartItems, backendUrl } = useContext(ShopContext)
 
   const success = searchParams.get("success")
   const orderId = searchParams.get("orderId")
@@ -24,7 +24,7 @@ const Verify = () => {
         return null
       }
 
-      const response = await axios.post('http://localhost:4000/api/order/verify', {success, orderId}, {headers: {token}})
+      const response = await axios.post(backendUrl + '/api/order/verify', {success, orderId}, {headers: {token}})
       if (response.data.success) {
         setCartItems({})
         navigate('/orders')

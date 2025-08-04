@@ -14,7 +14,7 @@ const ShopContextProvider = (props) => {
   const [products, setProducts] = useState([]);
   const [token, setToken] = useState("");
 
-  //const backendUrl = import.meta.env.VITE_BACKEND_URL
+  const backendUrl = import.meta.env.VITE_BACKEND_URL
 
   const navigate = useNavigate();
 
@@ -227,6 +227,7 @@ const ShopContextProvider = (props) => {
     navigate,
     token,
     setToken,
+    backendUrl
   };
 
   return (

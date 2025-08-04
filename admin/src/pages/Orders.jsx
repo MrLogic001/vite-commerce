@@ -3,6 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { assets } from "../assets/assets.js";
 import { currency } from "../App";
+import { backendUrl } from "../App";
 
 const Orders = ({ token }) => {
   const [orders, setOrders] = useState([]);
@@ -13,8 +14,7 @@ const Orders = ({ token }) => {
     }
 
     try {
-      const response = await axios.post(
-        "http://localhost:4000/api/order/list",
+      const response = await axios.post(backendUrl + "/api/order/list",
         {},
         { headers: { token } }
       );
@@ -31,7 +31,7 @@ const Orders = ({ token }) => {
   const statusHandler = async (e, orderId) => {
 
     try {
-      const response = await axios.post('http://localhost:4000/api/order/status', {status: e.target.value, orderId}, {headers: {token}})
+      const response = await axios.post(backendUrl + '/api/order/status', {status: e.target.value, orderId}, {headers: {token}})
       if (response.data.success) {
         await fetchAllOrders()
 
