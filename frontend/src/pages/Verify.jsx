@@ -24,7 +24,7 @@ const Verify = () => {
         return null
       }
 
-      const response = await axios.post(backendUrl + '/api/order/verify', {success, orderId}, {headers: {token}})
+      const response = await axios.post(`${backendUrl}/api/order/verify`, {success, orderId}, {headers: {token}})
       if (response.data.success) {
         setCartItems({})
         navigate('/orders')
@@ -39,11 +39,57 @@ const Verify = () => {
 
   useEffect(() => {
     verifyPayment()
-  }, [token])
+  }, [token, success, orderId])
 
   return (
     <div>Verify</div>
   )
 }
 
-export default Verify
+export default Verify;
+
+/**
+import { useContext, useEffect } from "react";
+import { ShopContext } from "../context/ShopContext";
+import { useSearchParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import axios from "axios";
+
+const Verify = () => {
+  const [searchParams] = useSearchParams();
+  const { token, navigate, setCartItems, backendUrl } = useContext(ShopContext);
+
+  const success = searchParams.get("success");
+  const orderId = searchParams.get("orderId");
+
+  const verifyPayment = async () => {
+    if (!token) {
+      toast.error("Authentication token is missing.");
+      return;
+    }
+
+    try {
+      const response = await axios.post(`${backendUrl}/api/order/verify`, { success, orderId }, { headers: { token } });
+      if (response.data.success) {
+        setCartItems({});
+        navigate('/orders');
+      } else {
+        toast.error("Payment verification failed. Redirecting to cart.");
+        navigate('/cart');
+      }
+    } catch (error) {
+      console.error("Payment verification error:", error);
+      toast.error("An error occurred during payment verification. Please try again.");
+    }
+  };
+
+  useEffect(() => {
+    verifyPayment();
+  }, [token, success, orderId]); // Include success and orderId
+
+  return <div>Verifying Payment...</div>;
+};
+
+export default Verify;
+
+ */

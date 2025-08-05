@@ -190,6 +190,32 @@ const updateStatus = async (req, res) => {
   }
 };
 
+/**
+ const verifyStripe = async (req, res) => {
+  const { success, userId, orderId } = req.body;
+
+  // Validate input data
+  if (!orderId || !userId || (success !== "true" && success !== "false")) {
+    return res.status(400).json({ success: false, message: "Invalid input data." });
+  }
+
+  try {
+    if (success === "true") {
+      await orderModel.findByIdAndUpdate(orderId, { payment: true });
+      await userModel.findByIdAndUpdate(userId, { cartData: {} });
+      return res.json({ success: true });
+    } else {
+      await orderModel.findByIdAndDelete(orderId);
+      return res.json({ success: false });
+    }
+  } catch (error) {
+    console.error("Error verifying payment:", error);
+    return res.status(500).json({ success: false, message: "Internal server error." });
+  }
+};
+
+ */
+
 export {
   placeOrder,
   placeOrderRazorpay,

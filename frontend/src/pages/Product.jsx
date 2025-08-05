@@ -20,14 +20,6 @@ const Product = () => {
         return null;
       }
     });
-    // OR
-    /*  products.map((item) => {
-      if (item._id === productId) {
-        setProductData(item);
-        setImage(item.image[0])
-      } else {
-        return null }
-    }); */
   };
 
   useEffect(() => {

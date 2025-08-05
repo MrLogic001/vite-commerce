@@ -7,22 +7,19 @@ import { toast } from 'react-toastify'
 const Orders = () => {
   const { token, currency, backendUrl } = useContext(ShopContext);
 
-  console.log('frontend orders token: ', token);
-
   const [orderData, setOrderData] = useState([]);
   const loadOrderData = async () => {
     try {
        if (!token) {
         return null;
       } 
-      const response = await axios.post(backendUrl + "/api/order/userorders",
+      const response = await axios.post(`${backendUrl}/api/order/userorders`,
         {},
         { headers: {token}}
       );
       
       if (response.data.success) {
          let allOrdersItem = [];
-     console.log(response.data);
 
          response.data.orders.map((order) => {
           order.items.map((item) => {
@@ -38,21 +35,8 @@ const Orders = () => {
         }); 
         setOrderData(allOrdersItem.reverse()); 
         console.log(orderData);
-
-        //console.log(response.data);
-
-/* response.data.orders.forEach(order => { // Using forEach for simplicity
-  order.items.forEach(item => {
-    // No need to reassign properties if they already exist
-    allOrdersItem.push(item);
-  });
-});
-
-setOrderData(allOrdersItem.reverse());
-console.log(orderData); // This might still show the old value if setOrderData is async.
-console.log("Updated orderData:", orderData); // Add this line to check the updated value
-                */
       }
+
     } catch (error) {
       console.error(error)
       toast.error(error.message)

@@ -57,8 +57,7 @@ const PlaceOrder = () => {
             }
           }
         }
-      }
-      
+      }      
       const orderData = {
 
         address: formData,
@@ -70,7 +69,7 @@ const PlaceOrder = () => {
 
         // API Calls for COD Payment Method
         case 'cod':
-          const response = await axios.post(backendUrl + '/api/order/place', orderData, {headers: {token}})
+          const response = await axios.post(`${backendUrl}/api/order/place`, orderData, {headers: {token}})
           if (response.data.success) {
             toast.success(response.data.message)
             setCartItems({})
@@ -84,7 +83,7 @@ const PlaceOrder = () => {
 
         // Dummy Stripe: https://docs.stripe.com/testing#international-cards 
         case 'stripe':
-          const responseStripe = await axios.post(backendUrl + '/api/order/stripe', orderData, {headers: {token}})
+          const responseStripe = await axios.post(`${backendUrl}/api/order/stripe`, orderData, {headers: {token}})
           if (responseStripe.data.success) {
             const { session_url } = responseStripe.data;
             window.location.replace(session_url)
