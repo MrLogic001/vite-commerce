@@ -11,7 +11,7 @@ const Login = ({ setToken }) => {
     try {
       e.preventDefault();
 
-      const response = await axios.post(backendUrl + "/api/user/admin", {
+      const response = await axios.post(`${backendUrl}/api/user/admin`, {
         email,
         password,
       });
@@ -57,7 +57,7 @@ const Login = ({ setToken }) => {
               required
             />
           </div>
-          <button className="mt-2 w-full py-2 px-4 rounded-md text-white bg-black">
+          <button type="submit" className="mt-2 w-full py-2 px-4 rounded-md text-white bg-black">
             Login
           </button>
         </form>

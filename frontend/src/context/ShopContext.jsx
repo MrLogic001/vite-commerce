@@ -42,7 +42,7 @@ const ShopContextProvider = (props) => {
 
     if (token) {
       try {
-        await axios.post("http://localhost:4000/api/cart/add",
+        await axios.post(`${backendUrl}/api/cart/add`,
           { itemId, size },
           { headers: { token } }
         );
@@ -82,7 +82,7 @@ const ShopContextProvider = (props) => {
     if (token) {
       try {
         const response = await axios.post(
-        "http://localhost:4000/api/cart/update",
+        `${backendUrl}/api/cart/update`,
           { itemId, size, quantity },
           { headers: { token } }
         );
@@ -120,7 +120,7 @@ const ShopContextProvider = (props) => {
 
   const getProductsData = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/api/product/list");
+      const response = await axios.get(`${backendUrl}/api/product/list`);
 
       if (response.data.success) {
         setProducts(response.data.products);
@@ -144,7 +144,7 @@ const ShopContextProvider = (props) => {
 
     // 2. Making the API call with error handling
     const response = await axios.post(
-      "http://localhost:4000/api/cart/get",
+      `${backendUrl}/api/cart/get`,
       {}, { headers:   {token}   }
     );
 
